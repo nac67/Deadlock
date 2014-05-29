@@ -1,10 +1,4 @@
-var x = 300;
-var y = 300;
-var ratFilmPlayer;
-
-var threads;
-
-var carrotBmp;
+var filmstrips = {};
 
 init();
 
@@ -12,26 +6,24 @@ function init () {
     Content.createLoader();
 
     //preload assets
-    carrotBmp = Content.preloadImage('images/carrot.png');
-    var runFilm = Content.preloadFilm('images/rat.png', 30, 110, 50, 6);
-    var spazFilm = Content.preloadFilm('images/Spazout.png', 60, 110, 50, 8);
+    Content.preloadImage('images/locked.png');
+    Content.preloadImage('images/selected.png');
+    filmstrips['Barrier']   = Content.preloadFilm('images/Barrier.png', 40, 40, 9, 3);
+    filmstrips['Mutex']     = Content.preloadFilm('images/Mutex.png', 40, 40, 6, 3);
+    filmstrips['Semaphore'] = Content.preloadFilm('images/Semaphore.png', 40, 40, 21, 5);
+    filmstrips['StartGate'] = Content.preloadFilm('images/StartGate.png', 40, 40, 4, 2);
+    filmstrips['Thread']    = Content.preloadFilm('images/Thread.png', 40, 40, 1, 1);
+    filmstrips['ThreadWaiting']= Content.preloadFilm('images/ThreadWaiting.png', 40, 40, 59, 8);
 
     //you can create the filmplayer here, or after preloading. It doesn't matter.
-    ratFilmPlayer = new Filmplayer();
+    /*ratFilmPlayer = new Filmplayer();
     ratFilmPlayer.addFilmStrip("running", runFilm);
-    ratFilmPlayer.addFilmStrip("spazzing", spazFilm);
+    ratFilmPlayer.addFilmStrip("spazzing", spazFilm);*/
 
     Content.loadThenStart(startGame);
 }
 
 function startGame () {
-    threads = new ThreadPaths();
-    threads.addTurn(1,1,DirEnum.RIGHT,0);
-    threads.addTurn(5,1,DirEnum.DOWN,0);
-    threads.addTurn(5,4,DirEnum.LEFT,0);
-    threads.addTurn(1,4,DirEnum.UP,0);
-
-
     animate(); //begin self-calling animate function
 }
 
@@ -70,8 +62,6 @@ function draw () {
         context.lineTo(i,HEIGHT);
     }
     context.stroke();
-
-    threads.draw();
 
     //ratFilmPlayer.draw(x,y);
 
