@@ -41,13 +41,13 @@ var ThreadPaths = function () {
         var x,y;
 
         context.strokeStyle="#FFFFFF";
-        context.lineWidth=2;
+        context.lineWidth=3;
         context.beginPath();
 
         for (var i = 0; i < turn.length; i++) {
 
-            x = turn[i][0]*TILE+TILE/2;
-            y = turn[i][1]*TILE+TILE/2;
+            x = turn[i][0]*TILE+TILE/2+.5;
+            y = turn[i][1]*TILE+TILE/2+.5;
 
             if(i==0){
                 context.moveTo(x,y);
@@ -55,8 +55,8 @@ var ThreadPaths = function () {
                 context.lineTo(x,y);
             }else{
                 context.lineTo(x,y);
-                x = turn[0][0]*TILE+TILE/2;
-                y = turn[0][1]*TILE+TILE/2;
+                x = turn[0][0]*TILE+TILE/2+.5;
+                y = turn[0][1]*TILE+TILE/2+.5;
                 context.lineTo(x,y);
             }
         };

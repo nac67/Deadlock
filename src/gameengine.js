@@ -1,3 +1,4 @@
+var game;
 var filmstrips = {};
 
 init();
@@ -24,47 +25,16 @@ function init () {
 }
 
 function startGame () {
+    game = new GameplayController(filmstrips);
     animate(); //begin self-calling animate function
 }
 
 function animate() {
-    update();
-    draw();
+    game.update();
+    game.draw();
   
     // request new frame
     requestAnimFrame(function() {
         animate();
     });
-}
-
-
-function update() {
-
-}
-
-function draw () {
-    var i;
-
-    // Draw the background
-    context.fillStyle = "#666666";
-    context.fillRect(0,0,WIDTH,HEIGHT);
-
-    // Draw the grid
-    context.strokeStyle = "#949494";
-    context.lineWidth = 1;
-    context.beginPath();
-    for(i=0.5;i<HEIGHT;i+=TILE){
-        context.moveTo(0,i);
-        context.lineTo(GAME_WIDTH,i);
-    }
-    for(i=0.5;i<GAME_WIDTH;i+=TILE){
-        context.moveTo(i,0);
-        context.lineTo(i,HEIGHT);
-    }
-    context.stroke();
-
-    //ratFilmPlayer.draw(x,y);
-
-    //context.drawImage(carrotBmp, 20, 20);
-    //context.drawImage(Content.getImage("images/carrot.png"), 20, 40);
 }

@@ -50,6 +50,7 @@ var Zone = function (x,y,w,h) {
         var h = (this.h-1)*TILE;
         context.fillStyle = "#000000";
         context.fillRect(x,y,w,h);
+        context.lineWidth=1;
         context.strokeStyle = "#00FF00";
         context.strokeRect(x,y,w,h);
     }
