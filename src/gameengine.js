@@ -2,6 +2,8 @@ var x = 300;
 var y = 300;
 var ratFilmPlayer;
 
+var threads;
+
 var carrotBmp;
 
 init();
@@ -23,46 +25,56 @@ function init () {
 }
 
 function startGame () {
+    threads = new ThreadPaths();
+    threads.addTurn(1,1,DirEnum.RIGHT,0);
+    threads.addTurn(5,1,DirEnum.DOWN,0);
+    threads.addTurn(5,4,DirEnum.LEFT,0);
+    threads.addTurn(1,4,DirEnum.UP,0);
+
+
     animate(); //begin self-calling animate function
 }
 
 function animate() {
-    // update
-    if(Key.isDown(Key.LEFT)){
-        x -= 3;
-    }
-    if(Key.isDown(Key.RIGHT)){
-        x += 3;
-    }
-    if(Key.isDown(Key.UP)){
-        y -= 3;
-    }
-    if(Key.isDown(Key.DOWN)){
-        y += 3;
-    }
-
-
-    if(Key.isDown(32)){
-        ratFilmPlayer.swapFilm("spazzing");
-    }else{
-        ratFilmPlayer.swapFilm("running");
-    }
-
-    ratFilmPlayer.updateFrame();
-
-    // draw
-    context.fillStyle = "#FFFFFF";
-    context.fillRect(0,0,WIDTH,HEIGHT);
-    ratFilmPlayer.draw(x,y);
-
-    //this demonstrates the two ways to draw bitmaps,
-    //   * using one that was returned from loadImage
-    //   * fetching one from Content's cache
-    context.drawImage(carrotBmp, 20, 20);
-    context.drawImage(Content.getImage("images/carrot.png"), 20, 40);
+    update();
+    draw();
   
     // request new frame
     requestAnimFrame(function() {
         animate();
     });
+}
+
+
+function update() {
+
+}
+
+function draw () {
+    var i;
+
+    // Draw the background
+    context.fillStyle = "#666666";
+    context.fillRect(0,0,WIDTH,HEIGHT);
+
+    // Draw the grid
+    context.strokeStyle = "#949494";
+    context.lineWidth = 1;
+    context.beginPath();
+    for(i=0.5;i<HEIGHT;i+=TILE){
+        context.moveTo(0,i);
+        context.lineTo(GAME_WIDTH,i);
+    }
+    for(i=0.5;i<GAME_WIDTH;i+=TILE){
+        context.moveTo(i,0);
+        context.lineTo(i,HEIGHT);
+    }
+    context.stroke();
+
+    threads.draw();
+
+    //ratFilmPlayer.draw(x,y);
+
+    //context.drawImage(carrotBmp, 20, 20);
+    //context.drawImage(Content.getImage("images/carrot.png"), 20, 40);
 }
