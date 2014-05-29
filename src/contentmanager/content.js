@@ -20,6 +20,7 @@
  */
 var Content = function () {
     var images = {};
+    var films = {};
     var loader;
     var percentDone = 0;
 
@@ -45,7 +46,9 @@ var Content = function () {
         Should only be done once per filmstrip */
     var preloadFilm = function (src, width, height, frames, framesInRow) {
         var bitmap = preloadImage(src);
-        return new Filmstrip(bitmap, width, height, frames, framesInRow);
+        var film =  new Filmstrip(bitmap, width, height, frames, framesInRow);
+        films[src] = film;
+        return film;
     }
 
     /** Starts the preloader then when its finished runs callback function */
@@ -81,6 +84,18 @@ var Content = function () {
         }
     }
 
+    /** Retrieves an flimstrip that has been previously loaded 
+        Can be done multiple times */
+    var getFilm = function (src) {
+        var film = films[src];
+        if(film == undefined){
+            alert("FAILED to retrieve film.\nYou have not previously loaded: "+src+ " or it is not a filmstrip, but an image instead");
+            return null;
+        }else{
+            return film;
+        }
+    }
+
 
     /** Will draw a preloader bar onto the screen with
         a bar signifying pct percent completion */
@@ -101,6 +116,7 @@ var Content = function () {
     return {
         createLoader: createLoader,
         getImage: getImage,
+        getFilm: getFilm,
         preloadFilm: preloadFilm,
         preloadImage: preloadImage,
         loadThenStart: loadThenStart,

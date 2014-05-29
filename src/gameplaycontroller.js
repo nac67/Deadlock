@@ -1,9 +1,6 @@
-var GameplayController = function (films) {
-    var filmstrips = films;
+var GameplayController = function () {
     this.level = new Level();
     this.level.loadLevel("put a path here");
-
-
 
 
 
@@ -14,6 +11,10 @@ var GameplayController = function (films) {
     this.draw = function () {
         var i;
 
+        // Update filmplayers
+        for (i=0; i<this.level.threads.length; i++) {
+            this.level.threads[i].filmplayer.updateFrame();
+        };
         // Draw the background
         context.fillStyle = "#666666";
         context.fillRect(0,0,WIDTH,HEIGHT);
@@ -36,6 +37,9 @@ var GameplayController = function (films) {
         for(i=0;i<this.level.zones.length;i++){
             this.level.zones[i].draw();
         }
+        for (i=0; i<this.level.threads.length; i++) {
+            this.level.threads[i].draw();
+        };
 
     }
 }

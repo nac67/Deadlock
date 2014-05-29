@@ -3,6 +3,8 @@ var Filmplayer = function () {
     this.filmStrips = [];         //[Filmstrip] list of strips
     this.frameIndex = [];         //[int] where the playhead currently is in the filmstrip
     this.nameMappings = {};       //<string,int> film name -> index in other arrays
+    this.frameDuration = 1;
+    this.frameTimer=0;
 
     this.paused = false;
 
@@ -31,7 +33,8 @@ var Filmplayer = function () {
 
     /** If not paused, it advances the current filmstrip by 1 frame */
     this.updateFrame = function () {
-        if(!this.paused){
+        this.frameTimer++;
+        if(!this.paused && this.frameTimer%this.frameDuration == 0){
             var n = this.frameIndex[this.currentStrip];
             this.setFrame(n+1);
         }

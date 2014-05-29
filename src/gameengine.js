@@ -1,5 +1,4 @@
 var game;
-var filmstrips = {};
 
 init();
 
@@ -9,12 +8,12 @@ function init () {
     //preload assets
     Content.preloadImage('images/locked.png');
     Content.preloadImage('images/selected.png');
-    filmstrips['Barrier']   = Content.preloadFilm('images/Barrier.png', 40, 40, 9, 3);
-    filmstrips['Mutex']     = Content.preloadFilm('images/Mutex.png', 40, 40, 6, 3);
-    filmstrips['Semaphore'] = Content.preloadFilm('images/Semaphore.png', 40, 40, 21, 5);
-    filmstrips['StartGate'] = Content.preloadFilm('images/StartGate.png', 40, 40, 4, 2);
-    filmstrips['Thread']    = Content.preloadFilm('images/Thread.png', 40, 40, 1, 1);
-    filmstrips['ThreadWaiting']= Content.preloadFilm('images/ThreadWaiting.png', 40, 40, 59, 8);
+    Content.preloadFilm('images/Barrier.png', 40, 40, 9, 3);
+    Content.preloadFilm('images/Mutex.png', 40, 40, 6, 3);
+    Content.preloadFilm('images/Semaphore.png', 40, 40, 21, 5);
+    Content.preloadFilm('images/StartGate.png', 40, 40, 4, 2);
+    Content.preloadFilm('images/Thread.png', 40, 40, 1, 1);
+    Content.preloadFilm('images/ThreadWaiting.png', 40, 40, 59, 8);
 
     //you can create the filmplayer here, or after preloading. It doesn't matter.
     /*ratFilmPlayer = new Filmplayer();
@@ -25,7 +24,7 @@ function init () {
 }
 
 function startGame () {
-    game = new GameplayController(filmstrips);
+    game = new GameplayController();
     animate(); //begin self-calling animate function
 }
 

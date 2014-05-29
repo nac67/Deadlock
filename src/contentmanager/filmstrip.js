@@ -1,4 +1,4 @@
-var Filmstrip = function (bmp, numF, frW, frH, frR) {
+var Filmstrip = function (bmp, frW, frH, numF, frR) {
     this.srcImage = bmp;         // a bitmap image NOT a path to an image
     this.numFrames = numF;       // the number of frames in the filmstrip
     this.frameWidth = frW;       // the width of an individual frame
