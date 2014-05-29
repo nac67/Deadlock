@@ -21,14 +21,12 @@ var Level = function () {
         this.zones.push(z);
 
         var thread0 = new Thread(0);
-        thread0.x = 1;
-        thread0.y = 7;
+        thread0.hardSetPos(1,7);
         var thread1 = new Thread(1);
-        thread1.x = 2;
-        thread1.y = 7;
+        thread1.hardSetPos(2,7);
         this.threads.push(thread0);
         this.threads.push(thread1);
 
-        thread0.filmplayer.swapFilm("waiting");
+        //thread0.filmplayer.swapFilm("waiting");
     }
 }

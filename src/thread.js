@@ -4,6 +4,11 @@ var Thread = function (id) {
     this.y = 0;
     this.dir = DirEnum.UP;
 
+    this.nextX = 0;
+    this.nextY = 0;
+    this.apparantX = 0;
+    this.apparantY = 0;
+
     this.filmplayer = new Filmplayer();
     this.filmplayer.frameDuration = 2;
     var defaultFilm = Content.getFilm('images/Thread.png');
@@ -11,7 +16,16 @@ var Thread = function (id) {
     this.filmplayer.addFilmStrip("default", defaultFilm);
     this.filmplayer.addFilmStrip("waiting", waitingFilm);
 
+    this.hardSetPos = function (x,y) {
+        this.x = x;
+        this.y = y;
+        this.nextX = x;
+        this.nextY = y;
+        this.apparantX = x;
+        this.apparantY = y;
+    }
+
     this.draw = function () {
-        this.filmplayer.draw(this.x*TILE,this.y*TILE);
+        this.filmplayer.draw(this.apparantX*TILE,this.apparantY*TILE);
     }
 }

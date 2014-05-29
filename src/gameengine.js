@@ -15,11 +15,6 @@ function init () {
     Content.preloadFilm('images/Thread.png', 40, 40, 1, 1);
     Content.preloadFilm('images/ThreadWaiting.png', 40, 40, 59, 8);
 
-    //you can create the filmplayer here, or after preloading. It doesn't matter.
-    /*ratFilmPlayer = new Filmplayer();
-    ratFilmPlayer.addFilmStrip("running", runFilm);
-    ratFilmPlayer.addFilmStrip("spazzing", spazFilm);*/
-
     Content.loadThenStart(startGame);
 }
 
