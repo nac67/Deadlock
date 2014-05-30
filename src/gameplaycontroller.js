@@ -9,8 +9,9 @@ var GameplayController = function () {
 
         if(timer == 0){
             timer = DELTA;
-            this.validatePositions();
+            
             this.calculateNextPositions();
+            this.validatePositions();
         }else{
             timer --;
             fraction = 1-timer/DELTA;
@@ -20,27 +21,53 @@ var GameplayController = function () {
 
     // UPDATE helpers
     this.validatePositions = function () {
-        
+        var that = this;
+        var valid = this.level.zones.reduce(
+            function (acc, curr, i, arr) {
+                return acc && curr.isValid(that.level.threads);
+            }, true);
+
+        if(!valid) {
+            console.log("you lose the game!!!!");
+        }
     }
 
     this.calculateNextPositions = function () {
-        var i, t, turn, lev = this.level;
-        for (i=0; i<lev.threads.length; i++) {
-            t = lev.threads[i];
-            t.x = t.nextX;
-            t.y = t.nextY;
-            t.apparantX = t.x;
-            t.apparantY = t.y;
+        function updateThread (thread) {
+            thread.x = thread.nextX;
+            thread.y = thread.nextY;
+            thread.apparantX = thread.x;
+            thread.apparantY = thread.y;
 
-            turn = lev.paths.getDirection(t.x,t.y);
+            turn = lev.paths.getDirection(thread.x,thread.y);
             if(turn != null){
-                t.dir = turn;
+                thread.dir = turn;
             }
 
-            if(t.dir == DirEnum.UP) t.nextY --;
-            if(t.dir == DirEnum.DOWN) t.nextY ++;
-            if(t.dir == DirEnum.LEFT) t.nextX --;
-            if(t.dir == DirEnum.RIGHT) t.nextX ++;
+            if(thread.dir == DirEnum.UP) thread.nextY --;
+            if(thread.dir == DirEnum.DOWN) thread.nextY ++;
+            if(thread.dir == DirEnum.LEFT) thread.nextX --;
+            if(thread.dir == DirEnum.RIGHT) thread.nextX ++;
+        }
+
+        var i, t, turn, lev = this.level;
+
+        if(MOVE_SAME_TIME){
+            for (i=0; i<lev.threads.length; i++) {
+                updateThread(lev.threads[i]);
+            }
+        }else{
+            var rand = Math.floor(Math.random()*lev.threads.length);
+            for (i=0; i<lev.threads.length; i++) {
+                if(i == rand){
+                    updateThread(lev.threads[i]);
+                }else{
+                    lev.threads[i].x = lev.threads[i].nextX;
+                    lev.threads[i].y = lev.threads[i].nextY;
+                    lev.threads[i].apparantX = lev.threads[i].x;
+                    lev.threads[i].apparantY = lev.threads[i].y;
+                }
+            }
         }
     }
 

@@ -7,17 +7,17 @@ var Level = function () {
 
     this.loadLevel = function (path) {
         this.paths = new ThreadPaths();
-        this.paths.addTurn(1,2,DirEnum.RIGHT,0);
-        this.paths.addTurn(6,2,DirEnum.DOWN,0);
+        this.paths.addTurn(1,1,DirEnum.RIGHT,0);
+        this.paths.addTurn(6,1,DirEnum.DOWN,0);
         this.paths.addTurn(6,13,DirEnum.LEFT,0);
         this.paths.addTurn(1,13,DirEnum.UP,0);
 
-        this.paths.addTurn(2,3,DirEnum.RIGHT,1);
-        this.paths.addTurn(5,3,DirEnum.DOWN,1);
+        this.paths.addTurn(2,2,DirEnum.RIGHT,1);
+        this.paths.addTurn(5,2,DirEnum.DOWN,1);
         this.paths.addTurn(5,12,DirEnum.LEFT,1);
         this.paths.addTurn(2,12,DirEnum.UP,1);
 
-        var z = new Zone(4,5,4,6);
+        var z = new Zone(4,4,4,7);
         this.zones.push(z);
 
         var thread0 = new Thread(0);

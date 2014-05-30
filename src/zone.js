@@ -9,6 +9,16 @@ var Zone = function (x,y,w,h) {
     /* This will return the bracket used by isValid */
     this.numberInside = function(threads){
         //TODO
+        var inside=0, edging=0, status;
+        for (var i = 0; i < threads.length; i++) {
+            status = this.checkBoundary(threads[i].x,threads[i].y);
+            if(status == ZoneStateEnum.INSIDE){
+                inside++;
+            }else if(status == ZoneStateEnum.EDGE){
+                edging++;
+            }
+        };
+        return [inside,inside+edging];
     }
 
     /* There will be a certain number of threads inside the zone. 
@@ -24,7 +34,12 @@ var Zone = function (x,y,w,h) {
         bracket = this.numberInside(threads);
         lower = bracket[0];
         upper = bracket[1];
-        //TODO
+        
+        if(lower == 0) return true;
+
+        if(lower == 1) return true; //this is hardcoded in now, TODO allow other types of zones
+
+        return false;
     }
 
     /* This checks if a cell is inside the zone or on the edge of it.
