@@ -1,41 +1,59 @@
 var UIController = function (level) {
     this.level = level;
 
+    this.origX = 0;
+    this.origY = 0;
+
     this.lastX = 0;
     this.lastY = 0;
     this.lastClick = false;
     this.dragTarget = null;
 
     this.processDragging = function (){
-        var locks = this.level.locks, lock, mx, my, _mx, _my, dx,dy;
+        var locks = this.level.locks, lock, mx, my;
 
-        mx = Mouse.x/TILE;
-        my = Mouse.y/TILE;
-        _mx = Math.floor(mx);
-        _my = Math.floor(my);
+        mx = Math.floor(Mouse.x/TILE);
+        my = Math.floor(Mouse.y/TILE);
+
 
         if(!this.lastClick && Mouse.leftDown){
             //MOUSE DOWN
             //obtain a drag target
             for (var i = 0; i < locks.length; i++) {
                 lock = locks[i];
-                if(lock.x === _mx && lock.y === _my){
+                if(lock.x === mx && lock.y === my){
                     this.dragTarget = lock;
+                    lock.dragging = true;
+                    this.origX = lock.x;
+                    this.origY = lock.y;
                     break;
                 }
             };
         }else if(Mouse.leftDown){
             //DRAG
             if(this.dragTarget !== null){
-                dx = mx - this.lastX;
-                dy = my - this.lastY;
-                this.dragTarget.dragX += dx;
-                this.dragTarget.dragY += dy;
-                this.dragTarget.setXYToDrag();
+                this.dragTarget.x = mx;
+                this.dragTarget.y = my;
             }
         }else if(this.lastClick){
             //MOUSE UP
-            this.dragTarget = null;
+            if(this.dragTarget !== null){
+                var that=this,
+                //is the dragged object not on top of any other locks?
+                valid = locks.reduce(function(acc,curr,i,arr){
+                    if(curr === that.dragTarget) return acc;
+                    return acc && !(curr.x == that.dragTarget.x && curr.y == that.dragTarget.y);
+                }, true);
+
+                if(!valid) {
+                    this.dragTarget.x = this.origX;
+                    this.dragTarget.y = this.origY;
+                }
+
+
+                this.dragTarget.dragging = false;
+                this.dragTarget = null;
+            }
         }
         this.lastClick = Mouse.leftDown;
         this.lastX = Mouse.x/TILE;

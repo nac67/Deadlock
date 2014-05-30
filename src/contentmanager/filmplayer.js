@@ -60,8 +60,8 @@ var Filmplayer = function () {
     }
 
     /** Draws the current strip to the canvas */
-    this.draw = function (x,y){
+    this.draw = function (x,y,alpha){
         var f = this.frameIndex[this.currentStrip];
-        this.filmStrips[this.currentStrip].draw(f,x,y);
+        this.filmStrips[this.currentStrip].draw(f,x,y,alpha);
     }
 }
