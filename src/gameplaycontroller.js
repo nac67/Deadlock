@@ -1,12 +1,15 @@
 var GameplayController = function () {
     this.level = new Level();
     this.lockController = new LockController(this.level);
+    this.uiController = new UIController(this.level);
     this.level.loadLevel("put a path here");
 
 
     var timer = 0;
     this.update = function () {
         var lev = this.level, fraction;
+
+        this.uiController.processDragging();
 
         if(timer == 0){
             timer = DELTA;

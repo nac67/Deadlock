@@ -3,6 +3,7 @@ var MutexType = {LOCK:0, UNLOCK:1};
 var Mutex = function (x,y) {
     this.x = x;
     this.y = y;
+    this.setDragToXY();
     this.filmplayer = new Filmplayer();
     var defaultFilm = Content.getFilm('images/Mutex.png');
     this.filmplayer.addFilmStrip("default",defaultFilm);
