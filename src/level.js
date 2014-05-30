@@ -27,6 +27,17 @@ var Level = function () {
         this.threads.push(thread0);
         this.threads.push(thread1);
 
+        var l  = new Mutex(5,4);
+        var l2 = new Mutex(6,4);
+        var l3 = new Mutex(5,10);
+        var l4 = new Mutex(6,10);
+        l3.type = MutexType.UNLOCK;
+        l4.type = MutexType.UNLOCK;
+
+        this.locks.push(l);
+        this.locks.push(l2);
+        this.locks.push(l3);
+        this.locks.push(l4);
         //thread0.filmplayer.swapFilm("waiting");
     }
 }

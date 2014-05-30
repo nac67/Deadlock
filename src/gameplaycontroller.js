@@ -1,5 +1,6 @@
 var GameplayController = function () {
     this.level = new Level();
+    this.lockController = new LockController(this.level);
     this.level.loadLevel("put a path here");
 
 
@@ -36,8 +37,8 @@ var GameplayController = function () {
         function updateThread (thread) {
             thread.x = thread.nextX;
             thread.y = thread.nextY;
-            thread.apparantX = thread.x;
-            thread.apparantY = thread.y;
+            thread.apparentX = thread.x;
+            thread.apparentY = thread.y;
 
             turn = lev.paths.getDirection(thread.x,thread.y);
             if(turn != null){
@@ -64,8 +65,8 @@ var GameplayController = function () {
                 }else{
                     lev.threads[i].x = lev.threads[i].nextX;
                     lev.threads[i].y = lev.threads[i].nextY;
-                    lev.threads[i].apparantX = lev.threads[i].x;
-                    lev.threads[i].apparantY = lev.threads[i].y;
+                    lev.threads[i].apparentX = lev.threads[i].x;
+                    lev.threads[i].apparentY = lev.threads[i].y;
                 }
             }
         }
@@ -75,8 +76,8 @@ var GameplayController = function () {
         var i, t, lev = this.level;
         for (i=0; i<lev.threads.length; i++) {
             t = lev.threads[i];
-            t.apparantX = t.x + fraction * (t.nextX-t.x);
-            t.apparantY = t.y + fraction * (t.nextY-t.y);
+            t.apparentX = t.x + fraction * (t.nextX-t.x);
+            t.apparentY = t.y + fraction * (t.nextY-t.y);
         }
     }
 
@@ -110,6 +111,9 @@ var GameplayController = function () {
         for(i=0;i<this.level.zones.length;i++){
             this.level.zones[i].draw();
         }
+        for (i=0; i<this.level.locks.length; i++) {
+            this.level.locks[i].draw();
+        };
         for (i=0; i<this.level.threads.length; i++) {
             this.level.threads[i].draw();
         };

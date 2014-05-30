@@ -8,7 +8,6 @@ var Zone = function (x,y,w,h) {
 
     /* This will return the bracket used by isValid */
     this.numberInside = function(threads){
-        //TODO
         var inside=0, edging=0, status;
         for (var i = 0; i < threads.length; i++) {
             status = this.checkBoundary(threads[i].x,threads[i].y);
@@ -63,7 +62,7 @@ var Zone = function (x,y,w,h) {
         var y = this.y*TILE + TILE/2 + 0.5;
         var w = (this.w-1)*TILE;
         var h = (this.h-1)*TILE;
-        context.fillStyle = "#000000";
+        context.fillStyle = "rgba(0,0,0,.4)";
         context.fillRect(x,y,w,h);
         context.lineWidth=1;
         context.strokeStyle = "#00FF00";

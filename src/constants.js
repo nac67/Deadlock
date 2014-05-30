@@ -6,3 +6,5 @@ var TILE = 40; //width of a single tile
 var DELTA = 30; //number of frames it takes to move one block
 
 var MOVE_SAME_TIME = true;
+
+var COLOR = {RED:0, GREEN:1, BLUE:2};
