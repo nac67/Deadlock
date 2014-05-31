@@ -38,6 +38,21 @@ var Level = function () {
         this.locks.push(l2);
         this.locks.push(l3);
         this.locks.push(l4);
+
+
+        var s = new Semaphore(8,4);
+        var s2 = new Semaphore(8,5);
+        s2.color = COLOR.GREEN;
+        s2.type = SemaphoreType.V;
+        this.locks.push(s);
+        this.locks.push(s2);
+
+        var b = new Barrier(10,4);
+        b.count = 4;
+        b.color = COLOR.BLUE;
+        this.locks.push(b);
+
+
         //thread0.filmplayer.swapFilm("waiting");
     }
 }

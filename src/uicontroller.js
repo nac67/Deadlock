@@ -18,7 +18,6 @@ var UIController = function (level) {
         mx = Math.floor(Mouse.x/TILE);
         my = Math.floor(Mouse.y/TILE);
 
-
         if(!this.lastClick && Mouse.leftDown){
             //MOUSE DOWN
             this.obtainDragTarget();
