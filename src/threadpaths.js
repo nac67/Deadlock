@@ -59,7 +59,6 @@ var ThreadPaths = function () {
         };
         context.stroke();
 
-        //TODO draw start gates
 
     }
 
@@ -74,4 +73,81 @@ var ThreadPaths = function () {
             }
         }
     }
+
+    this.drawGate = (function(){
+
+        var cache = {};
+
+        return function (gate) {
+            var _x,_y;
+
+            var x = gate[0];
+            var y = gate[1];
+            var dir = gate[2];
+
+            //the key for the cache table
+            var s = x+","+y+","+dir;
+
+            if(!cache[s]){
+                var transform = function(i,dir){
+                    _x[i] -= .5;
+                    _y[i] -= .5;
+                    if(dir === DirEnum.LEFT){
+                        var t = _x[i];
+                        _x[i] = _y[i];
+                        _y[i] = -t;
+                    }
+                    if(dir === DirEnum.RIGHT){
+                        var t = _x[i];
+                        _x[i] = -_y[i];
+                        _y[i] = t;
+
+                    }
+                    if(dir === DirEnum.DOWN){
+                        _x[i] = -_x[i];
+                        _y[i] = -_y[i];
+                    }
+                    _x[i] += .5;
+                    _y[i] += .5;
+
+                    _x[i] = (_x[i]+x)*TILE;
+                    _y[i] = (_y[i]+y)*TILE;
+
+                    if(dir == DirEnum.UP || dir == DirEnum.DOWN){
+                        _x[i]+=.5;
+                    }
+                    if(dir == DirEnum.LEFT || dir == DirEnum.RIGHT){
+                        _y[i]+=.5;
+                    }
+                }
+
+                _x = [.2,.5,.8];
+                _y = [.6,.3,.6];
+
+                for(var i=0;i<_x.length;i++){
+                    transform(i, dir);
+                }
+
+                cache[s] = [_x,_y];
+            }
+
+            _x = cache[s][0];
+            _y = cache[s][1];
+            
+            context.beginPath();
+            for(var i=0;i<_x.length;i++){
+                if(i===0){
+                    context.moveTo(_x[i],_y[i]);
+                }else if(i<_x.length-1){
+                    context.lineTo(_x[i],_y[i]);
+                }else{
+                    context.lineTo(_x[i],_y[i]);
+                    context.lineTo(_x[0],_y[0]);
+                }
+            }
+            context.closePath();
+            context.fillStyle = '#FFFFFF';
+            context.fill();
+        }
+    })();
 }

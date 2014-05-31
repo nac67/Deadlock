@@ -60,4 +60,5 @@ var Level = function () {
         this.threads.push(thread);
         this.gates.push([x,y,dir]);
     }
+
 }

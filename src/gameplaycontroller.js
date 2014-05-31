@@ -26,10 +26,8 @@ var GameplayController = function () {
     // UPDATE helpers
     this.validatePositions = function () {
         var that = this;
-        var valid = this.level.zones.reduce(
-            function (acc, curr, i, arr) {
-                return acc && curr.isValid(that.level.threads);
-            }, true);
+        var valid = this.level.zones.every(function(elem,i,arr){
+            return elem.isValid(that.level.threads)});
 
         if(!valid) {
             console.log("you lose the game!!!!");
@@ -120,6 +118,9 @@ var GameplayController = function () {
         for (i=0; i<this.level.threads.length; i++) {
             this.level.threads[i].draw();
         };
+        for (i=0; i<this.level.gates.length; i++) {
+            this.level.paths.drawGate(this.level.gates[i]);
+        }
 
         this.uiController.draw();
 
