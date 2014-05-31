@@ -44,14 +44,14 @@ var GameplayController = function () {
             thread.apparentY = thread.y;
 
             turn = lev.paths.getDirection(thread.x,thread.y);
-            if(turn != null){
+            if(turn !== null){
                 thread.dir = turn;
             }
 
-            if(thread.dir == DirEnum.UP) thread.nextY --;
-            if(thread.dir == DirEnum.DOWN) thread.nextY ++;
-            if(thread.dir == DirEnum.LEFT) thread.nextX --;
-            if(thread.dir == DirEnum.RIGHT) thread.nextX ++;
+            if(thread.dir === DirEnum.UP) thread.nextY --;
+            if(thread.dir === DirEnum.DOWN) thread.nextY ++;
+            if(thread.dir === DirEnum.LEFT) thread.nextX --;
+            if(thread.dir === DirEnum.RIGHT) thread.nextX ++;
         }
 
         var i, t, turn, lev = this.level;

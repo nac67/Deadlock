@@ -3,6 +3,7 @@ var Level = function () {
     this.threads = [];
     this.paths = null;
     this.locks = [];
+    this.gates = [];
 
 
     this.loadLevel = function (path) {
@@ -20,12 +21,8 @@ var Level = function () {
         var z = new Zone(4,4,4,7);
         this.zones.push(z);
 
-        var thread0 = new Thread(0);
-        thread0.hardSetPos(1,7);
-        var thread1 = new Thread(1);
-        thread1.hardSetPos(2,7);
-        this.threads.push(thread0);
-        this.threads.push(thread1);
+        this.setStartGate(1,7,DirEnum.UP);
+        this.setStartGate(2,7,DirEnum.UP);
 
         var l  = new Mutex(5,4);
         var l2 = new Mutex(6,4);
@@ -54,5 +51,13 @@ var Level = function () {
 
 
         //thread0.filmplayer.swapFilm("waiting");
+    }
+
+    this.setStartGate = function (x,y,dir) {
+        var thread = new Thread();
+        thread.hardSetPos(x,y);
+        thread.dir = dir;
+        this.threads.push(thread);
+        this.gates.push([x,y,dir]);
     }
 }
