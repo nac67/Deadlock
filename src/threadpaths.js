@@ -4,34 +4,31 @@ var ThreadPaths = function () {
    
     //TODO optimize this if necessary
     //http://www.timdown.co.uk/jshashtable/
-    //halfway down, use hashtable
-    var turn0 = []; //[   [x,y,direction] ... ]
-    var turn1 = [];
-    var turn2 = [];
+    //halfway down on that webpage, use hashtable
+
+    //each thread path is of the form 
+    //  [   [x,y,direction] ... ]
+    //
+    //allPathTurns is an array of thread paths
+    var allPathTurns = [];
 
     this.addTurn = function (x,y,dir,turnNumber){
-        if(turnNumber == 0)
-            turn0.push([x,y,dir]);
-        if(turnNumber == 1)
-            turn1.push([x,y,dir]);
-        if(turnNumber == 2)
-            turn2.push([x,y,dir]);
+        if(!this.hasPathNumber(turnNumber)){
+            allPathTurns[turnNumber] = [];
+        }
+        allPathTurns[turnNumber].push([x,y,dir]);
     }
 
     this.getDirection = function (x,y) {
-        for(var i=0;i<turn0.length;i++){
-            if(turn0[i][0] == x && turn0[i][1] == y){
-                return turn0[i][2];
-            }
-        }
-        for(var i=0;i<turn1.length;i++){
-            if(turn1[i][0] == x && turn1[i][1] == y){
-                return turn1[i][2];
-            }
-        }
-        for(var i=0;i<turn2.length;i++){
-            if(turn2[i][0] == x && turn2[i][1] == y){
-                return turn2[i][2];
+        var turn;
+        for(var j=0;j<allPathTurns.length;j++){
+            if(this.hasPathNumber(j)){
+                turn = allPathTurns[j];
+                for(var i=0;i<turn.length;i++){
+                    if(turn[i][0] == x && turn[i][1] == y){
+                        return turn[i][2];
+                    }
+                }
             }
         }
         return null;
@@ -66,15 +63,15 @@ var ThreadPaths = function () {
 
     }
 
+    this.hasPathNumber = function (n){
+        return !(typeof allPathTurns[n] === "undefined");
+    }
+
     this.draw = function () {
-        if(turn0.length > 2){
-            this.drawTurnPaths(turn0);
-        }
-        if(turn1.length > 2){
-            this.drawTurnPaths(turn1);
-        }
-        if(turn2.length > 2){
-            this.drawTurnPaths(turn2);
+        for(var j=0;j<allPathTurns.length;j++){
+            if(this.hasPathNumber(j)){
+                this.drawTurnPaths(allPathTurns[j]);
+            }
         }
     }
 }
