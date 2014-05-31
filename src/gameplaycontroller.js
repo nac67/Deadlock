@@ -121,5 +121,7 @@ var GameplayController = function () {
             this.level.threads[i].draw();
         };
 
+        this.uiController.draw();
+
     }
 }

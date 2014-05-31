@@ -2,8 +2,6 @@ var Draggable = function () {
     this.x = 0;
     this.y = 0;
     this.dragging = false; //are you currently moving it around, or is it settled?
-
-
 }
 
 Draggable.prototype.draw = function () {
