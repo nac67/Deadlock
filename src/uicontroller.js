@@ -13,10 +13,14 @@ var UIController = function (level) {
 
     this.mx = 0;
     this.my = 0;
+    this._mx = 0;
+    this._mx = 0;
 
     this.processDragging = function (){
         this.mx = Math.floor(Mouse.x/TILE);
         this.my = Math.floor(Mouse.y/TILE);
+        this._mx = Mouse.x/TILE;
+        this._my = Mouse.y/TILE;
 
 
         if(!this.lastClick && Mouse.leftDown){
