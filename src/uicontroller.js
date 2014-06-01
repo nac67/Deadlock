@@ -15,8 +15,9 @@ var UIController = function (level) {
     this.my = 0;
 
     this.processDragging = function (){
-        mx = Math.floor(Mouse.x/TILE);
-        my = Math.floor(Mouse.y/TILE);
+        this.mx = Math.floor(Mouse.x/TILE);
+        this.my = Math.floor(Mouse.y/TILE);
+
 
         if(!this.lastClick && Mouse.leftDown){
             //MOUSE DOWN
@@ -37,7 +38,7 @@ var UIController = function (level) {
         var locks = this.level.locks, lock;
         for (var i = 0; i < locks.length; i++) {
             lock = locks[i];
-            if(lock.x === mx && lock.y === my){
+            if(lock.x === this.mx && lock.y === this.my){
                 this.dragTarget = lock;
                 lock.dragging = true;
                 this.origX = lock.x;
@@ -56,8 +57,8 @@ var UIController = function (level) {
 
     this.dragCurrentObject = function () {
         if(this.dragTarget !== null){
-            this.dragTarget.x = mx;
-            this.dragTarget.y = my;
+            this.dragTarget.x = this.mx;
+            this.dragTarget.y = this.my;
         }
     }
 
