@@ -42,23 +42,26 @@ var UIController = function (level) {
         for (var i = 0; i < locks.length; i++) {
             lock = locks[i];
             if(lock.x === this.mx && lock.y === this.my){
-                this.dragTarget = lock;
-                lock.dragging = true;
-                this.origX = lock.x;
-                this.origY = lock.y;
-                this.lastX = this._mx;
-                this.lastY = this._my;
+                this.beginDragging(lock);
                 break;
             }
         };
-        if(this.dragTarget !== null){
-            this.selectedObject = this.dragTarget;
-        }else{
+        if(this.dragTarget === null){
             if(Mouse.x < GAME_WIDTH){
                 this.selectedObject = null;
             }
         }
         
+    }
+
+    this.beginDragging = function (lock) {
+        this.dragTarget = lock;
+        lock.dragging = true;
+        this.origX = lock.x;
+        this.origY = lock.y;
+        this.lastX = this._mx;
+        this.lastY = this._my;
+        this.selectedObject = this.dragTarget;
     }
 
     this.dragCurrentObject = function () {
