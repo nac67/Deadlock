@@ -46,6 +46,8 @@ var UIController = function (level) {
                 lock.dragging = true;
                 this.origX = lock.x;
                 this.origY = lock.y;
+                this.lastX = this._mx;
+                this.lastY = this._my;
                 break;
             }
         };
@@ -56,8 +58,7 @@ var UIController = function (level) {
                 this.selectedObject = null;
             }
         }
-        this.lastX = this._mx;
-        this.lastY = this._my;
+        
     }
 
     this.dragCurrentObject = function () {
@@ -73,16 +74,16 @@ var UIController = function (level) {
             //is the dragged object not on top of any other locks?
             valid = this.level.locks.reduce(function(acc,curr,i,arr){
                 if(curr === that.dragTarget) return acc;
-                return acc && !(curr.x == that.dragTarget.x && curr.y == that.dragTarget.y);
+                return acc && !(curr.x == that.mx && curr.y == that.my);
             }, true);
 
             if(!valid) {
                 this.dragTarget.x = this.origX;
                 this.dragTarget.y = this.origY;
+            }else{
+                this.dragTarget.x = this.mx;
+                this.dragTarget.y = this.my;
             }
-
-            this.dragTarget.x = this.mx;
-            this.dragTarget.y = this.my;
 
             this.dragTarget.dragging = false;
             this.dragTarget = null;
