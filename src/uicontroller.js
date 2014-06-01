@@ -28,8 +28,6 @@ var UIController = function (level) {
             this.releaseDragTarget();
         }
         this.lastClick = Mouse.leftDown;
-        this.lastX = Mouse.x/TILE;
-        this.lastY = Mouse.y/TILE;
     }
 
     this.obtainDragTarget = function () {
