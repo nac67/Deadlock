@@ -86,7 +86,7 @@ var ThreadPaths = function () {
             var dir = gate[2];
 
             //the key for the cache table
-            var s = x+","+y+","+dir;
+            var s = x+","+y+","+dir+","+TILE;
 
             if(!cache[s]){
                 var transform = function(i,dir){
