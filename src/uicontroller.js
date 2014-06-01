@@ -1,19 +1,19 @@
 var UIController = function (level) {
     this.level = level;
 
-    this.origX = 0;
-    this.origY = 0;
-
-    this.lastX = 0;
-    this.lastY = 0;
+    
     this.lastClick = false;
     this.dragTarget = null;
 
     this.selectedObject = null;
 
-    this.mx = 0;
+    this.origX = 0; //where the icon originated INTEGER
+    this.origY = 0;
+    this.lastX = 0; //begin dragging mouse exact position FLOAT
+    this.lastY = 0;
+    this.mx = 0; //current tile position of mouse INTEGER
     this.my = 0;
-    this._mx = 0;
+    this._mx = 0; //current exact position of mouse FLOAT
     this._my = 0;
 
     this.processDragging = function (){
@@ -34,8 +34,7 @@ var UIController = function (level) {
             this.releaseDragTarget();
         }
         this.lastClick = Mouse.leftDown;
-        this.lastX = Mouse.x/TILE;
-        this.lastY = Mouse.y/TILE;
+        
     }
 
     this.obtainDragTarget = function () {
@@ -57,12 +56,14 @@ var UIController = function (level) {
                 this.selectedObject = null;
             }
         }
+        this.lastX = this._mx;
+        this.lastY = this._my;
     }
 
     this.dragCurrentObject = function () {
         if(this.dragTarget !== null){
-            this.dragTarget.x = this.mx;
-            this.dragTarget.y = this.my;
+            this.dragTarget.x = this.origX + (this._mx - this.lastX);
+            this.dragTarget.y = this.origY + (this._my - this.lastY);
         }
     }
 
@@ -79,6 +80,9 @@ var UIController = function (level) {
                 this.dragTarget.x = this.origX;
                 this.dragTarget.y = this.origY;
             }
+
+            this.dragTarget.x = this.mx;
+            this.dragTarget.y = this.my;
 
             this.dragTarget.dragging = false;
             this.dragTarget = null;
