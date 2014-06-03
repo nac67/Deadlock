@@ -12,8 +12,8 @@ var Mouse = function () {
         Mouse.leftDown = true;
 
         if (event.x != undefined && event.y != undefined) {
-            Mouse.x = event.x;
-            Mouse.y = event.y;
+            Mouse.x = event.x + document.body.scrollLeft;
+            Mouse.y = event.y + document.body.scrollTop;
         } else { // Firefox method to get the position
             Mouse.x = event.clientX + document.body.scrollLeft +
                 document.documentElement.scrollLeft;
@@ -28,8 +28,8 @@ var Mouse = function () {
     //TODO cache offset
     function mouseMove (event){
         if (event.x != undefined && event.y != undefined) {
-            Mouse.x = event.x;
-            Mouse.y = event.y;
+            Mouse.x = document.body.scrollLeft +event.x;
+            Mouse.y = document.body.scrollTop + event.y;
         } else { // Firefox method to get the position
             Mouse.x = event.clientX + document.body.scrollLeft +
                 document.documentElement.scrollLeft;
