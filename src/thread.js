@@ -8,6 +8,8 @@ var Thread = function () {
     this.apparentX = 0;
     this.apparentY = 0;
 
+    this.completedLaps = 0;
+
     this.filmplayer = new Filmplayer();
     this.filmplayer.frameDuration = 2;
     var defaultFilm = Content.getFilm('images/Thread.png');

@@ -16,6 +16,7 @@ var GameplayController = function () {
             
             this.calculateNextPositions();
             this.validatePositions();
+            this.checkGameWin();
         }else{
             timer --;
             fraction = 1-timer/DELTA;
@@ -34,8 +35,19 @@ var GameplayController = function () {
         }
     }
 
+    // This is the function that actually alters the game state
+    // after execution of this function
+    // you can consider the x,y to be the actual
+    // current coordinates for sake of calculation.
     this.calculateNextPositions = function () {
+        var i, t, turn, lev = this.level, that=this;
+
         function updateThread (thread) {
+            //check lap first
+            var addALap = !that.level.isStartGate(thread.x,thread.y) && 
+                that.level.isStartGate(thread.nextX,thread.nextY);
+            if(addALap) thread.completedLaps ++;
+
             thread.x = thread.nextX;
             thread.y = thread.nextY;
             thread.apparentX = thread.x;
@@ -51,8 +63,6 @@ var GameplayController = function () {
             if(thread.dir === DirEnum.LEFT) thread.nextX --;
             if(thread.dir === DirEnum.RIGHT) thread.nextX ++;
         }
-
-        var i, t, turn, lev = this.level;
 
         if(MOVE_SAME_TIME){
             for (i=0; i<lev.threads.length; i++) {
@@ -79,6 +89,16 @@ var GameplayController = function () {
             t = lev.threads[i];
             t.apparentX = t.x + fraction * (t.nextX-t.x);
             t.apparentY = t.y + fraction * (t.nextY-t.y);
+        }
+    }
+
+    this.checkGameWin = function () {
+        var lev = this.level;
+        var gameWin = lev.threads.every(function(elem,i,arry){
+            return elem.completedLaps >= lev.neededLaps;
+        });
+        if(gameWin){
+            console.log("you win!");
         }
     }
 

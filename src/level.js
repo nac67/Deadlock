@@ -5,6 +5,8 @@ var Level = function () {
     this.locks = [];
     this.gates = [];
 
+    this.neededLaps = 0;
+
 
     this.loadLevel = function (path) {
         this.paths = new ThreadPaths();
@@ -49,6 +51,8 @@ var Level = function () {
         b.color = COLOR.BLUE;
         this.locks.push(b);
 
+        this.neededLaps = 3;
+
 
         //thread0.filmplayer.swapFilm("waiting");
     }
@@ -59,6 +63,13 @@ var Level = function () {
         thread.dir = dir;
         this.threads.push(thread);
         this.gates.push([x,y,dir]);
+    }
+
+    this.isStartGate = function(x,y){
+        return this.gates.some(function (gate,i,arry) {
+                return gate[0] === x && gate[1] ===y;
+            });
+
     }
 
 }
