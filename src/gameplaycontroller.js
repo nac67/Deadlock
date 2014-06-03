@@ -5,6 +5,12 @@ var GameplayController = function () {
     this.level.loadLevel("put a path here");
 
 
+    //There are a few phases, at a large timestep, the threads actual position
+    //because updates to what its apparent position is. It is at this point where
+    //we make judgements about what should happen to that thread.
+    //
+    //During any other time between timesteps, the thread is traveling to its next position
+
     var timer = 0;
     this.update = function () {
         var lev = this.level, fraction;

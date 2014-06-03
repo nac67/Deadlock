@@ -8,6 +8,8 @@ var Thread = function () {
     this.apparentX = 0;
     this.apparentY = 0;
 
+    this.blocked = false;
+
     this.completedLaps = 0;
 
     this.filmplayer = new Filmplayer();
@@ -28,6 +30,14 @@ var Thread = function () {
     }
 
     this.draw = function () {
+        if(this.blocked){
+            if(this.filmplayer.getFilm() === "default"){
+                this.filmplayer.swapFilm("waiting");
+                this.filmplayer.setFrame(0);
+            }
+        }else{
+            this.filmplayer.swapFilm("default");
+        }
         this.filmplayer.draw(this.apparentX*TILE,this.apparentY*TILE);
     }
 }

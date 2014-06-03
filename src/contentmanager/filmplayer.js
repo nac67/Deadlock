@@ -3,6 +3,7 @@ var Filmplayer = function () {
     this.filmStrips = [];         //[Filmstrip] list of strips
     this.frameIndex = [];         //[int] where the playhead currently is in the filmstrip
     this.nameMappings = {};       //<string,int> film name -> index in other arrays
+    this.nameGivenIndex = [];     // nameGivenIndex[i] gives the name of filmstrip #i
     this.frameDuration = 1;
     this.frameTimer=0;
 
@@ -44,6 +45,7 @@ var Filmplayer = function () {
         later used for swapFilm */
     this.addFilmStrip = function (name, strip){
         this.nameMappings[name] = this.filmStrips.length;
+        this.nameGivenIndex[this.filmStrips.length] = name;
         this.filmStrips.push(strip);
         this.frameIndex.push(0);
     }
@@ -57,6 +59,11 @@ var Filmplayer = function () {
         }else{
             console.log("'"+name+"'' is not a valid name for a filmstrip.");
         }
+    }
+
+    /** Returns the name id of the currently playing film strip */
+    this.getFilm = function () {
+        return this.nameGivenIndex[this.currentStrip];
     }
 
     /** Draws the current strip to the canvas */
