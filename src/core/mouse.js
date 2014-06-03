@@ -25,6 +25,7 @@ var Mouse = function () {
         Mouse.y -= canvas.offsetTop;
     }
 
+    //TODO cache offset
     function mouseMove (event){
         if (event.x != undefined && event.y != undefined) {
             Mouse.x = event.x;

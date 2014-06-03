@@ -72,4 +72,13 @@ var Level = function () {
 
     }
 
+    this.getLockAt = function(x,y){
+        var l;
+        for (var i = 0; i < this.locks.length; i++) {
+            l = this.locks[i];
+            if(l.x === x & l.y === y) return l;
+        };
+        return null;
+    }
+
 }

@@ -54,6 +54,9 @@ var GameplayController = function () {
                 that.level.isStartGate(thread.nextX,thread.nextY);
             if(addALap) thread.completedLaps ++;
 
+            //see if it should block
+            that.lockController.processLocking(thread);
+
             thread.x = thread.nextX;
             thread.y = thread.nextY;
             thread.apparentX = thread.x;
@@ -64,18 +67,33 @@ var GameplayController = function () {
                 thread.dir = turn;
             }
 
-            if(thread.dir === DirEnum.UP) thread.nextY --;
-            if(thread.dir === DirEnum.DOWN) thread.nextY ++;
-            if(thread.dir === DirEnum.LEFT) thread.nextX --;
-            if(thread.dir === DirEnum.RIGHT) thread.nextX ++;
+            
+
+            if(!thread.blocked){
+                if(thread.dir === DirEnum.UP) thread.nextY --;
+                if(thread.dir === DirEnum.DOWN) thread.nextY ++;
+                if(thread.dir === DirEnum.LEFT) thread.nextX --;
+                if(thread.dir === DirEnum.RIGHT) thread.nextX ++;
+            }
         }
 
         if(MOVE_SAME_TIME){
+            for (i=0; i<lev.threads.length; i++) {
+                this.lockController.processUnlocking(lev.threads[i]);
+            }
+
             for (i=0; i<lev.threads.length; i++) {
                 updateThread(lev.threads[i]);
             }
         }else{
             var rand = Math.floor(Math.random()*lev.threads.length);
+
+            for (i=0; i<lev.threads.length; i++) {
+                if(i == rand){
+                    this.lockController.processUnlocking(lev.threads[i]);
+                }
+            }
+
             for (i=0; i<lev.threads.length; i++) {
                 if(i == rand){
                     updateThread(lev.threads[i]);
