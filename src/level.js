@@ -5,10 +5,19 @@ var Level = function () {
     this.locks = [];
     this.gates = [];
 
-    this.neededLaps = 0;
+    this.mutexKeys = [0,0,0];        //how many keys should the level start with
+    this.semaphoreKeys = [0,0,0];    //what should be the initial semaphore count
+    this.neededAtBarrier = [0,0,0];  //how many things are needed to pass a barrier
+    this.atBarrier = [0,0,0];        //how many are currently at the barrier
+
+    this.neededLaps = 0;             //how many laps are needed to win
 
 
-    /*this.loadLevel = function (path) {
+    this.loadLevel = function (path) {
+        this.mutexKeys = [1,1,1];
+        this.semaphoreKeys = [2,0,0];
+        this.neededAtBarrier = [3,3,3];
+
         this.paths = new ThreadPaths();
         this.paths.addTurn(1,1,DirEnum.RIGHT,0);
         this.paths.addTurn(6,1,DirEnum.DOWN,0);
@@ -55,9 +64,14 @@ var Level = function () {
 
 
         //thread0.filmplayer.swapFilm("waiting");
-    }*/
+    }
 
-    this.loadLevel = function (path) {
+    /*this.loadLevel = function (path) {
+
+        this.mutexKeys = [1,1,1];
+        this.semaphoreKeys = [2,0,0];
+        this.neededAtBarrier = [3,3,3];
+
         this.paths = new ThreadPaths();
         this.paths.addTurn(1,1,DirEnum.RIGHT,0);
         this.paths.addTurn(6,1,DirEnum.DOWN,0);
@@ -103,9 +117,14 @@ var Level = function () {
 
 
         //thread0.filmplayer.swapFilm("waiting");
-    }
+    }*/
 
-    /*this.loadLevel = function (path) {
+    this.loadLevel = function (path) {
+
+        this.mutexKeys = [1,1,1];
+        this.semaphoreKeys = [2,0,0];
+        this.neededAtBarrier = [3,3,3];
+
         this.paths = new ThreadPaths();
         this.paths.addTurn(1,1,DirEnum.RIGHT,0);
         this.paths.addTurn(6,1,DirEnum.DOWN,0);
@@ -147,7 +166,7 @@ var Level = function () {
 
 
         //thread0.filmplayer.swapFilm("waiting");
-    }*/
+    }
 
     this.setStartGate = function (x,y,dir) {
         var thread = new Thread();
