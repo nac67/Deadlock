@@ -81,9 +81,9 @@ var Level = function () {
 
 
 
-        var s1 = new Semaphore(0,4);
-        var s2 = new Semaphore(1,4);
-        var s3 = new Semaphore(2,4);
+        var s1 = new Semaphore(0,0);
+        var s2 = new Semaphore(1,1);
+        var s3 = new Semaphore(2,2);
 
         var s4 = new Semaphore(5,10);
         var s5 = new Semaphore(6,10);

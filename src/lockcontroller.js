@@ -55,4 +55,16 @@ var LockController = function (level) {
             }
         }
     }
+
+   
+
+    this.setSemaphoreFrames = function (state) {
+        var lock;
+        for (var i = 0; i < this.level.locks.length; i++) {
+            lock = this.level.locks[i];
+            if(lock instanceof Semaphore){
+                lock.displayNumber = state === GameState.SIMULATION ? this.semaphoreKeys[lock.color] : -1;
+            }
+        };
+    }
 }

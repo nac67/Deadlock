@@ -14,7 +14,7 @@ var Semaphore = function (x,y) {
     this.filmplayer.paused = true;
 
     this.draw = function () {
-        if(this.displayNumber == -1){
+        if(this.displayNumber == -1 || this.type === SemaphoreType.V){
             //this means its a V or that game is in staging mode
             this.filmplayer.setFrame(this.type*18+this.color);
         }else{

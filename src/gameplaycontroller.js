@@ -1,8 +1,11 @@
+var GameState = {STAGING: 0, SIMULATION:1};
 var GameplayController = function () {
     this.level = new Level();
     this.lockController = new LockController(this.level);
     this.uiController = new UIController(this.level);
     this.level.loadLevel("put a path here");
+
+    this.state = GameState.STAGING;
 
 
     //There are a few phases, at a large timestep, the threads actual position
@@ -15,19 +18,29 @@ var GameplayController = function () {
     this.update = function () {
         var lev = this.level, fraction;
 
-        this.uiController.processDragging();
-
-        if(timer == 0){
-            timer = DELTA;
-            
-            this.calculateNextPositions();
-            this.validatePositions();
-            this.checkGameWin();
-        }else{
-            timer --;
-            fraction = 1-timer/DELTA;
-            this.interpolatePositions(fraction);
+        if(this.state === GameState.STAGING){
+            this.uiController.processDragging();
         }
+        else if(this.state === GameState.SIMULATION){
+            if(timer == 0){
+                timer = DELTA;
+                
+                this.calculateNextPositions();
+                this.validatePositions();
+                this.checkGameWin();
+            }else{
+                timer --;
+                fraction = 1-timer/DELTA;
+                this.interpolatePositions(fraction);
+            }
+            
+        }
+        this.lockController.setSemaphoreFrames(this.state);
+
+        if(Key.isDown(32)){
+            this.state = GameState.SIMULATION;
+        }
+        
     }
 
     //use this to change DELTA
