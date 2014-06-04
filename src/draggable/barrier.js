@@ -3,7 +3,7 @@ var Barrier = function (x,y) {
     this.y = y;
 
     this.color = COLOR.RED;
-    this.count = 3;
+    this.displayNumber = 3;
 
     this.filmplayer = new Filmplayer();
     var defaultFilm = Content.getFilm('images/Barrier.png');
@@ -11,7 +11,7 @@ var Barrier = function (x,y) {
     this.filmplayer.paused = true;
 
     this.draw = function () {
-        this.filmplayer.setFrame((this.count-2)*3+this.color); //this is super hacky and i like it
+        this.filmplayer.setFrame((this.displayNumber-2)*3+this.color); //this is super hacky and i like it
         Draggable.prototype.draw.call(this);  
     }
 }

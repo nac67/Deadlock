@@ -35,7 +35,7 @@ var GameplayController = function () {
             }
             
         }
-        this.lockController.setSemaphoreFrames(this.state);
+        this.lockController.setLockGraphics(this.state);
 
         if(Key.isDown(32)){
             this.state = GameState.SIMULATION;
@@ -100,6 +100,7 @@ var GameplayController = function () {
             for (i=0; i<lev.threads.length; i++) {
                 this.lockController.processUnlocking(lev.threads[i]);
             }
+            this.lockController.countThoseAtBarrier();
 
             for (i=0; i<lev.threads.length; i++) {
                 updateThread(lev.threads[i]);
@@ -114,6 +115,7 @@ var GameplayController = function () {
             }
 
             for (i=0; i<lev.threads.length; i++) {
+                //note: semaphores work but look funny
                 if(i == rand){
                     updateThread(lev.threads[i]);
                 }else{

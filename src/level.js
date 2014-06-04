@@ -105,6 +105,50 @@ var Level = function () {
         //thread0.filmplayer.swapFilm("waiting");
     }
 
+    /*this.loadLevel = function (path) {
+        this.paths = new ThreadPaths();
+        this.paths.addTurn(1,1,DirEnum.RIGHT,0);
+        this.paths.addTurn(6,1,DirEnum.DOWN,0);
+        this.paths.addTurn(6,13,DirEnum.LEFT,0);
+        this.paths.addTurn(1,13,DirEnum.UP,0);
+
+        this.paths.addTurn(2,2,DirEnum.RIGHT,1);
+        this.paths.addTurn(5,2,DirEnum.DOWN,1);
+        this.paths.addTurn(5,12,DirEnum.LEFT,1);
+        this.paths.addTurn(2,12,DirEnum.UP,1);
+
+        this.paths.addTurn(0,0,DirEnum.RIGHT,2);
+        this.paths.addTurn(7,0,DirEnum.DOWN,2);
+        this.paths.addTurn(7,14,DirEnum.LEFT,2);
+        this.paths.addTurn(0,14,DirEnum.UP,2);
+
+        this.setStartGate(1,7,DirEnum.UP);
+        this.setStartGate(2,7,DirEnum.UP);
+        this.setStartGate(0,7,DirEnum.UP);
+
+
+
+
+        var s1 = new Barrier(0,0);
+        var s2 = new Barrier(1,1);
+        var s3 = new Barrier(2,2);
+
+        var s4 = new Barrier(5,10);
+        var s5 = new Barrier(6,10);
+        var s6 = new Barrier(7,10);
+        this.locks.push(s1);
+        this.locks.push(s2);
+        this.locks.push(s3);
+        this.locks.push(s4);
+        this.locks.push(s5);
+        this.locks.push(s6);
+
+        this.neededLaps = 3;
+
+
+        //thread0.filmplayer.swapFilm("waiting");
+    }*/
+
     this.setStartGate = function (x,y,dir) {
         var thread = new Thread();
         thread.hardSetPos(x,y);

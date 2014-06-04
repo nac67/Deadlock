@@ -3,6 +3,7 @@ var LockController = function (level) {
 
     this.mutexKeys = [1,1,1];
     this.semaphoreKeys = [2,0,0];
+    this.neededAtBarrier = [3,3,3];
     this.atBarrier = [0,0,0];
 
     //at this point in time thread.x,y is its previous position, and
@@ -53,17 +54,41 @@ var LockController = function (level) {
                     }
                 }
             }
+            if(currentLock instanceof Barrier){
+                if(this.atBarrier[currentLock.color] >= this.neededAtBarrier[currentLock.color]){
+                    thread.blocked = false;
+                }else{
+                    thread.blocked = true;
+                }
+            }
         }
     }
 
-   
+    this.countThoseAtBarrier = function (state) {
+        var lock, thread, currentLock;
 
-    this.setSemaphoreFrames = function (state) {
+        this.atBarrier = [0,0,0];
+        
+        for (var i = 0; i < this.level.threads.length; i++) {
+            thread = this.level.threads[i];
+            currentLock = this.level.getLockAt(thread.nextX,thread.nextY);
+            if(currentLock !== null){
+                if(currentLock instanceof Barrier){
+                    this.atBarrier[currentLock.color]++;
+                }
+            }
+        }
+    }
+
+    this.setLockGraphics = function (state) {
         var lock;
         for (var i = 0; i < this.level.locks.length; i++) {
             lock = this.level.locks[i];
             if(lock instanceof Semaphore){
                 lock.displayNumber = state === GameState.SIMULATION ? this.semaphoreKeys[lock.color] : -1;
+            }
+            if(lock instanceof Barrier){
+                lock.displayNumber = this.neededAtBarrier[lock.color];
             }
         };
     }
