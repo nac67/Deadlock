@@ -2,7 +2,7 @@ var LockController = function (level) {
     this.level = level;
 
     this.mutexKeys = [1,1,1];
-    this.semaphoreKeys = [0,0,0];
+    this.semaphoreKeys = [2,0,0];
     this.atBarrier = [0,0,0];
 
     //at this point in time thread.x,y is its previous position, and
@@ -19,6 +19,11 @@ var LockController = function (level) {
                     }
                 }
             }
+            if(currentLock instanceof Semaphore){
+                if(currentLock.type === SemaphoreType.V){
+                    this.semaphoreKeys[currentLock.color] ++;
+                }
+            }
         }
     }
 
@@ -32,6 +37,16 @@ var LockController = function (level) {
                 if(currentLock.type === MutexType.LOCK){
                     if(this.mutexKeys[currentLock.color] === 1){
                         this.mutexKeys[currentLock.color] --;
+                        thread.blocked = false;
+                    }else{
+                        thread.blocked = true;
+                    }
+                }
+            }
+            if(currentLock instanceof Semaphore){
+                if(currentLock.type === SemaphoreType.P){
+                    if(this.semaphoreKeys[currentLock.color] > 0){
+                        this.semaphoreKeys[currentLock.color] --;
                         thread.blocked = false;
                     }else{
                         thread.blocked = true;

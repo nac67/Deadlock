@@ -30,6 +30,12 @@ var GameplayController = function () {
         }
     }
 
+    //use this to change DELTA
+    this.hardSetDelta = function(val) {
+        timer = val;
+        DELTA = val;
+    }
+
     // UPDATE helpers
     this.validatePositions = function () {
         var that = this;
